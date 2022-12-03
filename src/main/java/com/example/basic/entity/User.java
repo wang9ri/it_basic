@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "username", "age"})
+@ToString(of = {"id", "role", "mobileNumber"})
 @Table(name = "users")
 public class User extends BaseTimeEntity {
 
@@ -29,38 +29,42 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "boolean default false")
      */
 
-    @Id
-    @GeneratedValue
-    @Column(name = "user_id")
-    private long id;
+  @Id
+  @GeneratedValue
+  @Column(name = "user_id")
+  private long id;
 
-    @NotNull
-    @Enumerated(value = EnumType.STRING)
-    private UserRole role;
-
-
-    @NotNull
-    private String mobileNumber;
-
-    @NotNull
-    private boolean activated;
+  @NotNull
+  @Enumerated(value = EnumType.STRING)
+  private UserRole role;
 
 
-    @NotNull
-    private double ratingScore;
+  @NotNull
+  private String mobileNumber;
 
-    @OneToMany(mappedBy = "user")
-    private List<Notification> notifications = new ArrayList();
+  @NotNull
+  private boolean activated;
 
-    public static User createMember(String mobileNumber, UserRole role, boolean activated, double ratingScore) {
 
-        User user = new User();
-        user.setMobileNumber(mobileNumber);
-        user.setRole(role);
-        user.setActivated(activated);
-        user.setRatingScore(ratingScore);
+  @NotNull
+  private double ratingScore;
 
-        return user;
-    }
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  private List<Notification> notifications = new ArrayList();
+
+  @OneToMany(mappedBy = "user")
+  private List<Post> posts = new ArrayList<>();
+
+  public static User createMember(String mobileNumber, UserRole role, boolean activated,
+      double ratingScore) {
+
+    User user = new User();
+    user.setMobileNumber(mobileNumber);
+    user.setRole(role);
+    user.setActivated(activated);
+    user.setRatingScore(ratingScore);
+
+    return user;
+  }
 
 }

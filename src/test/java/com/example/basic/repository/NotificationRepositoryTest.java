@@ -13,40 +13,43 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("dev")
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
 class NotificationRepositoryTest {
 
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private NotificationRepository notificationRepository;
+  @Autowired
+  private UserRepository userRepository;
+  @Autowired
+  private NotificationRepository notificationRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
+  @BeforeEach
+  void setUp() {
+  }
 
-    @DisplayName("알람 등록 ")
-    @Test
-    void saveNotification() {
-        User user = userRepository.findAll().get(0);
+  @DisplayName("알람 등록 ")
+  @Test
+  void saveNotification() {
+    User user = userRepository.findAll().get(0);
 
-        Notification notification = new Notification();
-        notification.setMessage("TEST MESSAGE");
-        notification.setUser(user);
-        notification.setMessageType(MessageType.OFFER);
+    Notification notification = new Notification();
+    notification.setMessage("TEST MESSAGE");
+    notification.setUser(user);
+    notification.setMessageType(MessageType.OFFER);
 
-        notification.setReadOrNot(false);
-        notification.setReceiverId(user.getId());
-        notificationRepository.save(notification);
+    notification.setReadOrNot(false);
+    notification.setReceiverId(user.getId());
+    notificationRepository.save(notification);
 
-        notificationRepository.findAll().get(0);
-        Assertions.assertThat(notification.getId()).isEqualTo(notificationRepository.findAll().get(0).getId());
+    notificationRepository.findAll().get(0);
+    Assertions.assertThat(notification.getId())
+        .isEqualTo(notificationRepository.findAll().get(0).getId());
 
-    }
+  }
 }

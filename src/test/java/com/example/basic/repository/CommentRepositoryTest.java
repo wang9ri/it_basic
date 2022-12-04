@@ -42,10 +42,7 @@ class CommentRepositoryTest {
     User user = User.createMember("01073002857", UserRole.MEMBER, true, 4.0);
     userRepository.save(user);
 
-    Post post = new Post();
-    post.setContent("1st comment");
-    post.setLocation("seoul");
-    post.setUser(user);
+    Post post = Post.createPost("test_content", "test_location", user);
     postRepository.save(post);
 
     //when
@@ -69,10 +66,7 @@ class CommentRepositoryTest {
     User user = User.createMember("01073002857", UserRole.MEMBER, true, 4.0);
     userRepository.save(user);
 
-    Post post = new Post();
-    post.setContent("1st comment");
-    post.setLocation("seoul");
-    post.setUser(user);
+    Post post = Post.createPost("test_content", "test_location", user);
     postRepository.save(post);
 
     //when

@@ -5,6 +5,7 @@ import com.example.basic.service.UserService;
 import com.example.basic.service.impl.UserServiceImpl;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,5 +22,12 @@ public class UserController {
   public List<User> findAllUsers() {
 
     return userService.findAll();
+  }
+
+  @GetMapping("/users/{id}")
+  public User findByid(@PathVariable Long id) {
+
+    return userService.findById(id);
+
   }
 }

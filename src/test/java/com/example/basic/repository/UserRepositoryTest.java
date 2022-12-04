@@ -3,6 +3,7 @@ package com.example.basic.repository;
 import com.example.basic.code.UserRole;
 import com.example.basic.entity.User;
 import java.util.List;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +37,15 @@ class UserRepositoryTest {
   void getUsers() {
     List<User> users = userRepository.findAll();
     users.stream().forEach(System.out::println);
+  }
+
+  @DisplayName("사용자 조회 By Id")
+  @Test
+  void getUserById() {
+    User savingUser = User.createMember("01073002857", UserRole.MEMBER, true, 4.0);
+    userRepository.save(savingUser);
+    User findByUser = userRepository.findById(savingUser.getId()).get();
+    Assertions.assertThat(findByUser.getId()).isEqualTo(savingUser.getId());
   }
 
   @DisplayName("사용자 등록")

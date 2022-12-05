@@ -36,7 +36,8 @@ class NotificationRepositoryTest {
   @DisplayName("알람 등록 ")
   @Test
   void saveNotification() {
-    User user = userRepository.findAll().get(0);
+    User user = User.createMember("01073002857", UserRole.MEMBER, true, 4.0);
+    userRepository.save(user);
 
     Notification notification = new Notification();
     notification.setMessage("TEST MESSAGE");
